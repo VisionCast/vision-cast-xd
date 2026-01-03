@@ -63,7 +63,7 @@ fi
 
 # Sign any embedded helper tools or executables
 if [ -d "$APP_PATH/Contents/MacOS" ]; then
-    find "$APP_PATH/Contents/MacOS" -type f -perm +111 ! -name "$(basename "$APP_PATH" .app)" | while read -r file; do
+    find "$APP_PATH/Contents/MacOS" -type f -perm /111 ! -name "$(basename "$APP_PATH" .app)" | while read -r file; do
         sign_file "$file"
     done
 fi

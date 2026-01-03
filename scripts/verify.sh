@@ -143,14 +143,14 @@ if [ -d "$APP_PATH/Contents/Frameworks" ]; then
     FRAMEWORK_COUNT=$(find "$APP_PATH/Contents/Frameworks" -type f \( -name "*.dylib" -o -name "*.framework" \) | wc -l | xargs)
     echo -e "${GREEN}  ✓ Found $FRAMEWORK_COUNT embedded libraries/frameworks${NC}"
     
-    # Verify each framework is signed
+    # Verify each framework is signed (use process substitution to avoid subshell)
     UNSIGNED_COUNT=0
-    find "$APP_PATH/Contents/Frameworks" -type f \( -name "*.dylib" -o -name "*.framework" \) | while read -r lib; do
+    while read -r lib; do
         if ! codesign --verify "$lib" 2>/dev/null; then
             echo -e "${RED}    ✗ Unsigned: $(basename "$lib")${NC}"
             UNSIGNED_COUNT=$((UNSIGNED_COUNT + 1))
         fi
-    done
+    done < <(find "$APP_PATH/Contents/Frameworks" -type f \( -name "*.dylib" -o -name "*.framework" \))
     
     if [ $UNSIGNED_COUNT -eq 0 ]; then
         echo -e "${GREEN}  ✓ All embedded libraries are signed${NC}"

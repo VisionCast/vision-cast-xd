@@ -71,7 +71,7 @@ echo ""
 
 # 10. List all code signatures in bundle
 echo -e "${YELLOW}10. List all signatures in bundle:${NC}"
-echo "   find \"$APP_PATH\" -type f -perm +111 -exec codesign --verify {} \\; -print"
+echo "   find \"$APP_PATH\" -type f -perm /111 -exec codesign --verify {} \\; -print"
 echo ""
 
 # 11. Check app bundle structure
