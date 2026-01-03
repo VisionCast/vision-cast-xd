@@ -3,3 +3,12 @@ BuildTools/.swiftpm
 xcuserdata/
 
 .idea
+
+# Build artifacts
+build/
+*.dmg
+*.zip
+*.log
+
+# Temporary files
+/tmp/
